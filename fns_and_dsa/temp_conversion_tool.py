@@ -1,38 +1,54 @@
-# Global conversion factors
-FAHRENHEIT_TO_CELSIUS_FACTOR = 5 / 9
-CELSIUS_TO_FAHRENHEIT_FACTOR = 9 / 5
-FREEZING_POINT = 32  # constant offset
+# temperature_conversion.py
 
+# Global conversion functions
 
-def convert_to_celsius(fahrenheit):
-    """Convert Fahrenheit to Celsius using global factor."""
-    return (fahrenheit - FREEZING_POINT) * FAHRENHEIT_TO_CELSIUS_FACTOR
+def celsius_to_fahrenheit(c):
+    return (c * 9/5) + 32
 
+def fahrenheit_to_celsius(f):
+    return (f - 32) * 5/9
 
-def convert_to_fahrenheit(celsius):
-    """Convert Celsius to Fahrenheit using global factor."""
-    return (celsius * CELSIUS_TO_FAHRENHEIT_FACTOR) + FREEZING_POINT
+def celsius_to_kelvin(c):
+    return c + 273.15
+
+def kelvin_to_celsius(k):
+    return k - 273.15
+
+def fahrenheit_to_kelvin(f):
+    return (f - 32) * 5/9 + 273.15
+
+def kelvin_to_fahrenheit(k):
+    return (k - 273.15) * 9/5 + 32
 
 
 if __name__ == "__main__":
+    print("Temperature Conversion Tool")
+    print("Choose conversion type:")
+    print("1. Celsius to Fahrenheit")
+    print("2. Fahrenheit to Celsius")
+    print("3. Celsius to Kelvin")
+    print("4. Kelvin to Celsius")
+    print("5. Fahrenheit to Kelvin")
+    print("6. Kelvin to Fahrenheit")
+
     try:
-        temp_input = input("Enter the temperature to convert: ").strip()
+        choice = int(input("Enter your choice (1-6): "))
+        value = float(input("Enter temperature value: "))
 
-        # Validate numeric input (support negative + decimal)
-        if not temp_input.replace(".", "", 1).lstrip("-").isdigit():
-            raise ValueError("Invalid temperature. Please enter a numeric value.")
-
-        temperature = float(temp_input)
-        unit = input("Is this temperature in Celsius or Fahrenheit? (C/F): ").strip().upper()
-
-        if unit == "F":
-            converted = convert_to_celsius(temperature)
-            print(f"{temperature}°F is {converted}°C")
-        elif unit == "C":
-            converted = convert_to_fahrenheit(temperature)
-            print(f"{temperature}°C is {converted}°F")
+        if choice == 1:
+            print("Result:", celsius_to_fahrenheit(value), "°F")
+        elif choice == 2:
+            print("Result:", fahrenheit_to_celsius(value), "°C")
+        elif choice == 3:
+            print("Result:", celsius_to_kelvin(value), "K")
+        elif choice == 4:
+            print("Result:", kelvin_to_celsius(value), "°C")
+        elif choice == 5:
+            print("Result:", fahrenheit_to_kelvin(value), "K")
+        elif choice == 6:
+            print("Result:", kelvin_to_fahrenheit(value), "°F")
         else:
-            raise ValueError("Invalid unit. Please enter 'C' for Celsius or 'F' for Fahrenheit.")
+            print("Invalid choice. Please select a number between 1 and 6.")
 
-    except ValueError as e:
-        print(e)
+    except ValueError:
+        print("Error: Please enter a valid number.")
