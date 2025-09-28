@@ -1,24 +1,28 @@
-# temperature_conversion.py
+# temp_conversion_tool.py
 
-# Global conversion functions
+# Global conversion factors
+FAHRENHEIT_TO_CELSIUS_FACTOR = 5/9
+CELSIUS_TO_FAHRENHEIT_FACTOR = 9/5
+KELVIN_OFFSET = 273.15
 
+# Conversion functions
 def celsius_to_fahrenheit(c):
-    return (c * 9/5) + 32
+    return (c * CELSIUS_TO_FAHRENHEIT_FACTOR) + 32
 
 def fahrenheit_to_celsius(f):
-    return (f - 32) * 5/9
+    return (f - 32) * FAHRENHEIT_TO_CELSIUS_FACTOR
 
 def celsius_to_kelvin(c):
-    return c + 273.15
+    return c + KELVIN_OFFSET
 
 def kelvin_to_celsius(k):
-    return k - 273.15
+    return k - KELVIN_OFFSET
 
 def fahrenheit_to_kelvin(f):
-    return (f - 32) * 5/9 + 273.15
+    return (f - 32) * FAHRENHEIT_TO_CELSIUS_FACTOR + KELVIN_OFFSET
 
 def kelvin_to_fahrenheit(k):
-    return (k - 273.15) * 9/5 + 32
+    return (k - KELVIN_OFFSET) * CELSIUS_TO_FAHRENHEIT_FACTOR + 32
 
 
 if __name__ == "__main__":
