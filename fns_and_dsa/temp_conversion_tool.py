@@ -3,56 +3,43 @@
 # Global conversion factors
 FAHRENHEIT_TO_CELSIUS_FACTOR = 5/9
 CELSIUS_TO_FAHRENHEIT_FACTOR = 9/5
-KELVIN_OFFSET = 273.15
-
-# Conversion functions
-def celsius_to_fahrenheit(c):
-    return (c * CELSIUS_TO_FAHRENHEIT_FACTOR) + 32
-
-def fahrenheit_to_celsius(f):
-    return (f - 32) * FAHRENHEIT_TO_CELSIUS_FACTOR
-
-def celsius_to_kelvin(c):
-    return c + KELVIN_OFFSET
-
-def kelvin_to_celsius(k):
-    return k - KELVIN_OFFSET
-
-def fahrenheit_to_kelvin(f):
-    return (f - 32) * FAHRENHEIT_TO_CELSIUS_FACTOR + KELVIN_OFFSET
-
-def kelvin_to_fahrenheit(k):
-    return (k - KELVIN_OFFSET) * CELSIUS_TO_FAHRENHEIT_FACTOR + 32
+FREEZING_POINT = 32  # Constant offset used in conversions
 
 
-if __name__ == "__main__":
-    print("Temperature Conversion Tool")
-    print("Choose conversion type:")
-    print("1. Celsius to Fahrenheit")
-    print("2. Fahrenheit to Celsius")
-    print("3. Celsius to Kelvin")
-    print("4. Kelvin to Celsius")
-    print("5. Fahrenheit to Kelvin")
-    print("6. Kelvin to Fahrenheit")
+def convert_to_celsius(fahrenheit):
+    """Convert Fahrenheit to Celsius using global factor."""
+    return (fahrenheit - FREEZING_POINT) * FAHRENHEIT_TO_CELSIUS_FACTOR
 
-    try:
-        choice = int(input("Enter your choice (1-6): "))
-        value = float(input("Enter temperature value: "))
 
-        if choice == 1:
-            print("Result:", celsius_to_fahrenheit(value), "°F")
-        elif choice == 2:
-            print("Result:", fahrenheit_to_celsius(value), "°C")
-        elif choice == 3:
-            print("Result:", celsius_to_kelvin(value), "K")
-        elif choice == 4:
-            print("Result:", kelvin_to_celsius(value), "°C")
-        elif choice == 5:
-            print("Result:", fahrenheit_to_kelvin(value), "K")
-        elif choice == 6:
-            print("Result:", kelvin_to_fahrenheit(value), "°F")
-        else:
-            print("Invalid choice. Please select a number between 1 and 6.")
+def convert_to_fahrenheit(celsius):
+    """Convert Celsius to Fahrenheit using global factor."""
+    return (celsius * CELSIUS_TO_FAHRENHEIT_FACTOR) + FREEZING_POINT
 
-    except ValueError:
-        print("Error: Please enter a valid number.")
+
+# Main program flow
+try:
+    # Prompt user for temperature
+    temp_input = input("Enter the temperature to convert: ").strip()
+
+    # Validate numeric input (allow negative and decimals)
+    if not temp_input.replace('.', '', 1).isdigit() and not (
+        temp_input.startswith('-') and temp_input[1:].replace('.', '', 1).isdigit()
+    ):
+        raise ValueError("Invalid temperature. Please enter a numeric value.")
+
+    temperature = float(temp_input)
+
+    # Ask user for unit
+    unit = input("Is this temperature in Celsius or Fahrenheit? (C/F): ").strip().upper()
+
+    if unit == "F":
+        converted = convert_to_celsius(temperature)
+        print(f"{temperature}°F is {converted}°C")
+    elif unit == "C":
+        converted = convert_to_fahrenheit(temperature)
+        print(f"{temperature}°C is {converted}°F")
+    else:
+        raise ValueError("Invalid unit. Please enter 'C' for Celsius or 'F' for Fahrenheit.")
+
+except ValueError as e:
+    print(e)
